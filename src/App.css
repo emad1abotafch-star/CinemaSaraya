@@ -1,0 +1,1139 @@
+/* ============================================================
+   App.css — Cinema Saraya
+   @import must be the very first statement in this file.
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&display=swap');
+
+/* ── Design tokens ─────────────────────────────────────────── */
+:root {
+  --bg:        #09080e;
+  --panel:     #111019;
+  --panel-2:   #15101c;
+  --purple:    #a98aff;
+  --purple-lt: #c4a8ff;
+  --gold:      #c9a86a;
+  --muted:     #a09aa9;
+  --border:    #ffffff0d;
+  --border-md: #ffffff18;
+}
+
+/* ── Global base ───────────────────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 86px; /* matches navbar height */
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #f7f3fa;
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background: var(--bg);
+  overflow-x: hidden;
+}
+
+/* Reset heading sizes so index.css can't bleed through */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: #f7f3fa;
+}
+
+p { margin: 0; }
+
+body, button, input, a {
+  font-family: 'IBM Plex Sans Arabic', sans-serif;
+}
+
+a   { color: inherit; text-decoration: none; }
+button { color: inherit; background: none; border: none; padding: 0; }
+
+/* ── App wrapper ───────────────────────────────────────────── */
+.cinema-app {
+  background:
+    radial-gradient(ellipse at 90% 0%, #21152d28, transparent 38%),
+    var(--bg);
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 86px;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  background: #09080eef;
+  border-bottom: 1px solid var(--border);
+  transition:
+    background 0.35s ease,
+    border-color 0.35s ease,
+    backdrop-filter 0.35s ease;
+}
+
+.navbar--scrolled {
+  background: #09080ef5;
+  border-bottom-color: var(--border-md);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Brand ------------------------------------------------- */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  width: 43px;
+  height: 43px;
+  display: grid;
+  place-items: center;
+  border: 1px solid #c9a86a80;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 27px;
+  font-style: italic;
+  box-shadow: inset 0 0 18px #c9a86a10;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  flex-shrink: 0;
+}
+
+.brand:hover .brand-mark {
+  border-color: var(--gold);
+  box-shadow: inset 0 0 24px #c9a86a22, 0 0 12px #c9a86a18;
+}
+
+.brand-text strong,
+.brand-text small {
+  display: block;
+}
+
+.brand-text strong {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: #f7f3fa;
+}
+
+.brand-text small {
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: 9px;
+  letter-spacing: 2.5px;
+  direction: ltr;
+  margin-top: 3px;
+}
+
+/* Nav links --------------------------------------------- */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(12px, 2vw, 30px);
+}
+
+.main-nav a {
+  color: #b6b0bf;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: color 0.2s ease;
+  padding-bottom: 2px;
+  /* Give links a decent tap target */
+  padding-top: 4px;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: #fff;
+}
+
+.main-nav a.active {
+  position: relative;
+}
+
+.main-nav a.active::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  /* 86px navbar - 4px top padding - 2px bottom padding = offset to bottom of navbar */
+  bottom: calc(-1 * (86px / 2 - 10px));
+  height: 2px;
+  width: 24px;
+  background: var(--gold);
+}
+
+.main-nav a:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Search button ----------------------------------------- */
+.search-button {
+  width: 39px;
+  height: 39px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid #ffffff22;
+  border-radius: 50%;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.search-button:hover {
+  border-color: var(--purple);
+  background: #a98aff14;
+}
+
+.search-button:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+}
+
+.search-button svg {
+  width: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  min-height: 620px;
+  height: min(700px, 78vw);
+  max-height: 780px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 60px 10%;
+  isolation: isolate;
+  background: #100d18;
+}
+
+.hero-image,
+.hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+}
+
+.hero-image {
+  background-image: url('https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=2200&q=90');
+  background-position: center 43%;
+  background-size: cover;
+  transform: scale(1.015);
+  animation: hero-arrive 1.3s ease-out both;
+}
+
+.hero-shade {
+  background:
+    linear-gradient(270deg, #09080efc 0%, #09080eea 25%, #09080e88 56%, #09080e18 100%),
+    linear-gradient(0deg, #09080efc 0%, transparent 36%, #09080e28 100%);
+}
+
+.hero-content {
+  width: min(640px, 78%);
+  position: relative;
+  z-index: 1;
+  animation: content-arrive 0.9s 0.15s ease-out both;
+}
+
+/* Eyebrow */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin: 0 0 26px;
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+}
+
+.eyebrow-line {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+/* Headline */
+.hero h1 {
+  margin: 0;
+  font-size: clamp(38px, 5.2vw, 70px);
+  line-height: 1.5;
+  font-weight: 600;
+  letter-spacing: -1.5px;
+  color: #f7f3fa;
+}
+
+.hero h1 span {
+  color: var(--purple-lt);
+}
+
+/* Description */
+.hero-description {
+  max-width: 460px;
+  margin: 18px 0 30px;
+  color: #c0bac9;
+  font-size: 14px;
+  line-height: 2.1;
+  font-weight: 300;
+}
+
+/* CTA buttons */
+.hero-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px;
+}
+
+.button-primary,
+.button-secondary {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 24px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform 0.22s ease, background 0.22s ease, opacity 0.2s ease;
+}
+
+.button-primary {
+  color: #120d1a;
+  background: var(--purple-lt);
+  font-weight: 600;
+  border: none;
+}
+
+.button-primary:hover {
+  background: #d8c7ff;
+  transform: translateY(-2px);
+}
+
+.button-primary:focus-visible {
+  outline: 2px solid var(--purple-lt);
+  outline-offset: 3px;
+}
+
+.button-secondary {
+  color: #f4effa;
+  border: 1px solid #ffffff40;
+  background: #ffffff07;
+}
+
+.button-secondary:hover:not(:disabled) {
+  background: #ffffff12;
+  transform: translateY(-2px);
+}
+
+.button-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.button-secondary:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+}
+
+.btn-arrow {
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Signature tagline */
+.hero-signature {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  margin-top: 56px;
+  color: #aaa3b2;
+  font-size: 11px;
+  letter-spacing: 0.4px;
+}
+
+.signature-line {
+  display: block;
+  width: 43px;
+  height: 1px;
+  background: #c9a86a80;
+}
+
+/* Decorative side elements */
+.hero-index {
+  position: absolute;
+  left: 7%;
+  bottom: 60px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #bcb4c8;
+  direction: ltr;
+  font-family: Georgia, serif;
+  font-size: 12px;
+}
+
+.hero-index span:first-child {
+  color: var(--gold);
+}
+
+.index-rule {
+  display: block;
+  width: 45px;
+  height: 1px;
+  background: #ffffff44;
+}
+
+.vertical-label {
+  position: absolute;
+  left: 3%;
+  top: 42%;
+  color: #ffffff55;
+  font-family: Georgia, serif;
+  font-size: 9px;
+  letter-spacing: 4px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+/* ============================================================
+   FILM DISCOVERY SECTION
+   ============================================================ */
+.film-section {
+  padding: 76px 7% 64px;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.section-kicker {
+  display: block;
+  color: var(--gold);
+  font-size: 12px;
+  letter-spacing: 0.6px;
+  margin-bottom: 9px;
+}
+
+.section-heading h2 {
+  margin: 0;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 500;
+  line-height: 1.55;
+  color: #f7f3fa;
+}
+
+/* "View all" — shown as non-interactive text until the page exists */
+.view-all-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  color: #6b6475;
+  font-size: 12px;
+  white-space: nowrap;
+  font-style: italic;
+  cursor: default;
+  user-select: none;
+}
+
+/* ── Horizontal scroll row ─────────────────────────────────── */
+.film-row-wrap {
+  position: relative;
+}
+
+/* Fade-out edge hint that content continues */
+.film-row-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;           /* RTL: fade on the left (trailing edge) */
+  width: 48px;
+  height: calc(100% - 14px); /* exclude scrollbar area */
+  background: linear-gradient(to right, var(--bg), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.film-row {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 14px;          /* space for custom scrollbar */
+  /* Keyboard-accessible: allow focus to scroll naturally */
+  outline: none;
+  scrollbar-width: thin;
+  scrollbar-color: #ffffff20 transparent;
+}
+
+.film-row::-webkit-scrollbar       { height: 3px; }
+.film-row::-webkit-scrollbar-track { background: transparent; }
+.film-row::-webkit-scrollbar-thumb {
+  background: #ffffff20;
+  border-radius: 2px;
+}
+
+/* ── Film card ─────────────────────────────────────────────── */
+.film-card {
+  flex: 0 0 clamp(200px, 22vw, 300px);
+  scroll-snap-align: start;
+  min-width: 0;
+  /* Keyboard focus outline on the card itself */
+}
+
+.film-card:focus-within .film-image-wrap {
+  border-color: var(--purple);
+}
+
+.film-image-wrap {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background: #17131f;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s ease;
+}
+
+.film-card:hover .film-image-wrap {
+  border-color: var(--border-md);
+}
+
+.film-image-wrap img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.75) brightness(0.82);
+  transition: transform 0.5s ease, filter 0.5s ease;
+}
+
+.film-card:hover img {
+  transform: scale(1.06);
+  filter: saturate(1) brightness(1);
+}
+
+/* Gradient + labels overlay */
+.film-card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(0deg, #09080ece 0%, transparent 45%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 14px 13px;
+  pointer-events: none;
+}
+
+.film-number {
+  color: #ffffffa0;
+  font-family: Georgia, serif;
+  font-size: 13px;
+  direction: ltr;
+}
+
+.film-genre-badge {
+  color: #f0ecf8;
+  font-size: 11px;
+  background: #ffffff10;
+  border: 1px solid #ffffff18;
+  padding: 3px 8px;
+  backdrop-filter: blur(4px);
+}
+
+.demo-note {
+  margin: 18px 0 0;
+  color: #5a5462;
+  font-size: 11px;
+  font-style: italic;
+}
+
+/* ============================================================
+   MANIFESTO / IDENTITY
+   ============================================================ */
+.manifesto {
+  min-height: 390px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 70px 10%;
+  overflow: hidden;
+  border-top: 1px solid #ffffff0b;
+  border-bottom: 1px solid #ffffff0b;
+  background:
+    radial-gradient(ellipse at 22% 55%, #51366d30, transparent 50%),
+    linear-gradient(112deg, #15101c, #0e0c14 68%);
+}
+
+.manifesto-content {
+  position: relative;
+  z-index: 1;
+  max-width: 580px;
+}
+
+.manifesto h2 {
+  margin: 12px 0 16px;
+  font-size: clamp(30px, 4.3vw, 52px);
+  font-weight: 500;
+  line-height: 1.75;
+  color: #f7f3fa;
+}
+
+.manifesto h2 span {
+  color: var(--purple);
+}
+
+.manifesto p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2.1;
+  max-width: 440px;
+  margin-bottom: 28px;
+}
+
+/* Decorative giant "S" */
+.manifesto-decoration {
+  position: absolute;
+  left: 8%;
+  top: -130px;
+  color: #c9a86a09;
+  font-family: Georgia, serif;
+  font-size: 500px;
+  font-style: italic;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.manifesto-label {
+  position: absolute;
+  left: 7%;
+  bottom: 32px;
+  color: #ffffff38;
+  font-family: Georgia, serif;
+  font-size: 9px;
+  letter-spacing: 3px;
+  direction: ltr;
+}
+
+/* ============================================================
+   NEWS STRIP
+   ============================================================ */
+.news-strip {
+  padding: 66px 10%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  border-bottom: 1px solid var(--border);
+}
+
+.news-strip h2 {
+  margin: 0 0 10px;
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 500;
+  color: #f7f3fa;
+}
+
+.news-strip p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 2.0;
+  margin: 0;
+}
+
+.news-strip .button-secondary {
+  flex-shrink: 0;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer {
+  padding: 28px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-top: 1px solid #ffffff10;
+  background: #07060b;
+}
+
+.footer-brand .brand-mark {
+  width: 36px;
+  height: 36px;
+  font-size: 22px;
+}
+
+.footer-brand .brand-text strong {
+  font-size: 14px;
+}
+
+.footer-tagline {
+  color: #827b8b;
+  font-size: 11px;
+  margin: 0;
+}
+
+.copyright {
+  color: #615a6a;
+  font-size: 11px;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes hero-arrive {
+  from { transform: scale(1.06); }
+  to   { transform: scale(1.015); }
+}
+
+@keyframes content-arrive {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   RESPONSIVE — WIDE
+   ============================================================ */
+@media (min-width: 1500px) {
+  .navbar,
+  .film-section,
+  .news-strip,
+  .footer {
+    padding-right: max(7%, calc((100% - 1400px) / 2));
+    padding-left:  max(7%, calc((100% - 1400px) / 2));
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — TABLET  (≤ 1050px)
+   ============================================================ */
+@media (max-width: 1050px) {
+  .navbar {
+    padding-right: 4%;
+    padding-left: 4%;
+    gap: 16px;
+  }
+
+  .main-nav { gap: 13px; }
+  .main-nav a { font-size: 11px; }
+
+  .film-section,
+  .news-strip {
+    padding-right: 5%;
+    padding-left: 5%;
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — MOBILE  (≤ 760px)
+   ============================================================ */
+@media (max-width: 760px) {
+  /* Adjust scroll-padding for taller mobile navbar */
+  html { scroll-padding-top: 120px; }
+
+  .navbar {
+    height: auto;
+    min-height: 68px;
+    padding: 12px 5%;
+    flex-wrap: wrap;
+    row-gap: 0;
+    /* Ensure frosted glass still works on mobile */
+    backdrop-filter: none;
+  }
+
+  .navbar--scrolled {
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+
+  .brand-mark       { width: 37px; height: 37px; font-size: 23px; }
+  .brand-text strong { font-size: 15px; }
+
+  /* Nav scrolls horizontally below brand row */
+  .main-nav {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px 0 14px;
+    gap: 20px;
+    scrollbar-width: none;
+  }
+  .main-nav::-webkit-scrollbar { display: none; }
+  .main-nav a { font-size: 11px; }
+  .main-nav a.active::after { bottom: -10px; }
+
+  .search-button { margin-right: auto; }
+
+  /* Hero */
+  .hero {
+    height: 630px;
+    min-height: 0;
+    padding: 60px 6%;
+  }
+
+  .hero-image { background-position: 60% center; }
+
+  .hero-shade {
+    background:
+      linear-gradient(270deg, #09080ef8 0%, #09080ee0 50%, #09080e6a 100%),
+      linear-gradient(0deg, #09080efe 0%, transparent 58%);
+  }
+
+  .hero-content { width: 100%; }
+
+  .hero h1 {
+    font-size: clamp(34px, 8.5vw, 54px);
+    letter-spacing: -1px;
+  }
+
+  .hero-description { font-size: 13px; }
+  .hero-signature   { margin-top: 36px; }
+  .vertical-label   { display: none; }
+  .hero-index       { bottom: 24px; left: 6%; }
+
+  /* Film section */
+  .film-section { padding: 52px 5% 44px; }
+
+  .section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Narrower cards on mobile — all 6 remain visible in scroll */
+  .film-card { flex: 0 0 clamp(160px, 52vw, 240px); }
+
+  /* Manifesto */
+  .manifesto { min-height: 340px; padding: 56px 6%; }
+  .manifesto-decoration { left: -4%; font-size: 360px; }
+
+  /* News strip */
+  .news-strip {
+    padding: 48px 6%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  /* Footer */
+  .footer {
+    padding: 24px 5%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions a,
+  .hero-actions button {
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   ACCESSIBILITY — reduced motion
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   PENDING NAV ITEMS
+   Not links — rendered as <span>, naturally skipped by keyboard.
+   ============================================================ */
+.nav-pending {
+  color: #4a4455;
+  font-size: 12px;
+  white-space: nowrap;
+  cursor: default;
+  user-select: none;
+}
+
+.nav-pending small {
+  font-size: 10px;
+  color: #3d3848;
+  margin-right: 3px;
+}
+
+/* ============================================================
+   SEARCH DIALOG
+   Native <dialog> element — keyboard accessible, Escape closes.
+   ============================================================ */
+.search-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(420px, 90vw);
+  height: fit-content;
+  background: #15101c;
+  border: 1px solid #ffffff18;
+  color: #f7f3fa;
+  padding: 32px;
+  font-family: inherit;
+  direction: rtl;
+  /* Reset browser dialog defaults */
+  border-radius: 0;
+  box-shadow: 0 24px 64px #00000099;
+}
+
+.search-dialog::backdrop {
+  background: rgba(9, 8, 14, 0.75);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+.search-dialog p:first-of-type {
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0 0 12px;
+  color: #f7f3fa;
+}
+
+.search-dialog p:last-of-type {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.9;
+  margin: 0 0 24px;
+}
+
+.search-dialog .search-dialog-close {
+  min-height: 40px;
+  padding: 0 20px;
+  border: 1px solid #ffffff40;
+  background: #ffffff07;
+  color: #f4effa;
+  font-family: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.search-dialog .search-dialog-close:hover {
+  background: #ffffff12;
+}
+
+.search-dialog .search-dialog-close:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   NEWS STRIP — COMING SOON NOTICE
+   Appears on button click and remains visible.
+   ============================================================ */
+.news-notice {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ============================================================
+   HERO — GENRE TAGS (Phase 2)
+   ============================================================ */
+.hero-genre-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 0 0 18px;
+}
+
+.hero-genre-tag {
+  color: #f0ecf8;
+  font-size: 11px;
+  background: #ffffff10;
+  border: 1px solid #ffffff18;
+  padding: 3px 10px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+/* Hero featured film meta (year + rating) */
+.hero-featured-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  direction: ltr;
+}
+
+.hero-meta-sep {
+  color: #ffffff40;
+}
+
+.hero-meta-rating {
+  color: var(--gold);
+}
+
+/* ============================================================
+   NEWS SECTION (Phase 2 — replaces news-strip)
+   ============================================================ */
+.news-section {
+  padding: 76px 7% 64px;
+  border-bottom: 1px solid var(--border);
+}
+
+.news-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+.news-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.news-card:hover {
+  border-color: var(--border-md);
+  background: var(--panel-2);
+}
+
+.news-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.news-card__source {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.news-card__sep {
+  color: #ffffff30;
+  font-size: 11px;
+}
+
+.news-card__date {
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.news-card__headline {
+  color: #f0ecf8;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.news-card__summary {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.85;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.news-card__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--purple-lt);
+  font-size: 12px;
+  margin-top: auto;
+  transition: color 0.2s ease;
+}
+
+.news-card__link:hover {
+  color: #fff;
+}
+
+.news-card__link:focus-visible {
+  outline: 2px solid var(--purple);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ============================================================
+   EMPTY STATE (Phase 2)
+   ============================================================ */
+.empty-state {
+  color: var(--muted);
+  font-size: 13px;
+  font-style: italic;
+  padding: 32px 0;
+  text-align: center;
+}
+
+/* ============================================================
+   RESPONSIVE — Phase 2 additions
+   ============================================================ */
+@media (max-width: 760px) {
+  .news-section {
+    padding: 52px 5% 44px;
+  }
+
+  .news-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-genre-tags {
+    gap: 6px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .news-section {
+    padding-right: max(7%, calc((100% - 1400px) / 2));
+    padding-left: max(7%, calc((100% - 1400px) / 2));
+  }
+}

@@ -1,0 +1,16 @@
+/* index.css — minimal baseline reset only.
+   All Cinema Saraya design tokens and rules live in App.css. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+}
